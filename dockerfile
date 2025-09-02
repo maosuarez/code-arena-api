@@ -3,21 +3,17 @@ FROM python:3.11-slim
 # Evita problemas con buffering
 ENV PYTHONUNBUFFERED=1
 
-# Crea directorio de trabajo
+# Directorio de trabajo
 WORKDIR /app
 
-# Instala dependencias
+# Instalar dependencias
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-
-COPY .env .env
+# Copiar código fuente
 COPY ./app ./app
 
-# Copia el código fuente
-COPY ./app ./app
-
-# Expone el puerto
+# Exponer puerto
 EXPOSE 8000
 
 # Comando de arranque
