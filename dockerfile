@@ -1,5 +1,15 @@
 FROM python:3.11-slim
 
+# 🔐 Declarar los argumentos que vienen del workflow
+ARG COSMOS_URL
+ARG SECRET_KEY
+ARG COSMOS_DB
+
+# 🧬 Exportarlos como variables de entorno si los necesitas en tiempo de ejecución
+ENV COSMOS_URL=${COSMOS_URL}
+ENV SECRET_KEY=${SECRET_KEY}
+ENV COSMOS_DB=${COSMOS_DB}
+
 # Evita problemas con buffering
 ENV PYTHONUNBUFFERED=1
 
