@@ -1,5 +1,6 @@
 fastapi==0.116.1
 uvicorn[standard]==0.35.0
+gunicorn
 motor==3.7.1
 pymongo==4.14.1
 python-jose==3.5.0
@@ -14,4 +15,3 @@ Jinja2==3.1.6
 PyYAML==6.0.2
 rich==14.1.0
 python-multipart==0.0.20
-
