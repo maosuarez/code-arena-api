@@ -16,13 +16,18 @@ jobs:
       - name: Log in to ACR with token
         run: echo ${{ secrets.ACR_TOKEN_PASSWORD }} | docker login ${{ secrets.AZURE_ACR_NAME }}.azurecr.io -u ${{ secrets.ACR_TOKEN_USERNAME }} --password-stdin
 
+      - name: Crear archivo .env
+        run: |
+                echo "COSMOS_URL=${{ secrets.COSMOS_URL }}" >> .env
+                echo "COSMOS_DB=${{ secrets.COSMOS_DB }}" >> .env
+                echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+
+      - name: Mover .env al contexto del Dockerfile
+        run: mv .env ./env
+
       - name: Build Docker image with secretes
         run: |
-                docker build . \
-                --build-arg COSMOS_URL=${{ secrets.COSMOS_URL }} \
-                --build-arg SECRET_KEY=${{ secrets.SECRET_KEY }} \
-                --build-arg COSMOS_DB=${{ secrets.COSMOS_DB }} \
-                -t ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/code-arena-api:latest
+                docker build . -t ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/code-arena-api:latest
 
 
       - name: Push Docker image
