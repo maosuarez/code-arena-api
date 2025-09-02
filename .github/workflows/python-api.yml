@@ -1,0 +1,23 @@
+name: Build, Push and Deploy Docker Image to ACR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to ACR with token
+        run: echo ${{ secrets.ACR_TOKEN_PASSWORD }} | docker login ${{ secrets.AZURE_ACR_NAME }}.azurecr.io -u ${{ secrets.ACR_TOKEN_USERNAME }} --password-stdin
+
+      - name: Build Docker image
+        run: docker build . -t ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/code-arena-api:latest
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/code-arena-api:latest
