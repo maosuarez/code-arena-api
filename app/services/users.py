@@ -1,3 +1,5 @@
+from datetime import datetime
+from fastapi import HTTPException, status
 from passlib.context import CryptContext
 import random
 import string
@@ -14,3 +16,13 @@ def generate_unique_code(existing_codes: set, length: int = 6) -> str:
         code = ''.join(random.choices(string.ascii_uppercase, k=length))
         if code not in existing_codes:
             return code
+
+def validate_competition_date(date_str: str) -> datetime:
+    try:
+        normalized = date_str.replace("Z", "+00:00")
+        return datetime.fromisoformat(normalized)
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Fecha de competencia inválida. Debe estar en formato ISO 8601."
+        )

@@ -1,11 +1,11 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional, Literal
 from typing import Optional
 from pydantic import BaseModel
 
 # Modelo de submission
 class Submission(BaseModel):
-    id: Optional[str]
+    id: Optional[str] = Field(default=None, alias="_id")
     problem: str
     status: Literal["AC" , "WA" , "TLE"]
     time: int
