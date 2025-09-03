@@ -241,7 +241,7 @@ async def create_submission(
 
         # 🧮 Calcular puntos
         difficulty = problem_data.get("difficulty")
-        points = competition.get("scoring", {}).get("difficulty", {}).get(difficulty, 0)
+        points = competition.get("scoring", {}).get(difficulty, 0)
 
         # ⏱️ Validar y calcular tiempo desde inicio
         start_time = validate_competition_date(competition.get("date"))
